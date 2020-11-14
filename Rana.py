@@ -70,11 +70,11 @@ class nodo_estado:
 645H321
 654H321
 
-
+Esta inicial: 111H222   estado final: 222H111
 
 """
 class ocho_puzzle:
-    estado_final = [nodo_estado("12345678H",None,"Final",None), nodo_estado("1238H4765",None,"Final",None)]
+    estado_final = [nodo_estado("222H111",None,"Final",None)]
     def __init__(self, EI):
         self.estado_inicial = nodo_estado(EI, None, "Origen", 1)
         self.estado_actual = None
