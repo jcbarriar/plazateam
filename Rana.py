@@ -95,10 +95,10 @@ class ocho_puzzle:
         return self.estado_actual in self.estado_final
 
     def mostrar_estado_actual(self):
-        print("Estado Actual [" + str(self.estado_actual.get_nivel()) + "] es:\n" + self.estado_actual.get_estado()[:3] + "\n" + self.estado_actual.get_estado()[3:6] + "\n" + self.estado_actual.get_estado()[6:] + "\n")
+        print("Estado Actual [" + str(self.estado_actual.get_nivel()) + "] es:\n" + self.estado_actual.get_estado())
 
     def mostrar_estado(self, e):
-        print("Estado es:\n" + e.get_estado()[:3] + "\n" + e.get_estado()[3:6] + "\n" + e.get_estado()[6:] + "\n")
+        print("Estado es:\n" + e.get_estado())
 
     def buscar_padre(self, e):
         if e.get_padre() == None:
