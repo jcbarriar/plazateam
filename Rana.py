@@ -111,39 +111,44 @@ class ocho_puzzle:
 
     def mover(self, direccion):
         index = self.estado_actual.get_estado().find("H")
-        estado_ahora=self.estado_actual.get_estado()
+        left1=self.estado_actual.get_estado()[index-1]
+        left2=self.estado_actual.get_estado()[index-2]
+        right1=self.estado_actual.get_estado()[index+1]
+        right2=self.estado_actual.get_estado()[index+2]
         if direccion == "LEFT1":
             if index < 0:
                 return "illegal"
-            if estado_ahora=="2":
+            if left1=="1":
                     aux = self.estado_actual.get_estado()[index-1]
             else:
-                    aux = self.estado_actual.get_estado()[index]
+                    return "illegal"
 
         
         if direccion == "RIGHT1":
             if index > 6:
                 return "illegal"
-            if estado_ahora=="1":
+            if right1=="2":
                     aux = self.estado_actual.get_estado()[index+1]
             else:
-                    aux = self.estado_actual.get_estado()[index]
+                    return "illegal"
 
         if direccion == "LEFT2":
             if index < 0:
                 return "illegal"
-            if estado_ahora=="2":
+            if left2=="1":
                     aux = self.estado_actual.get_estado()[index-2]
             else:
-                    aux = self.estado_actual.get_estado()[index]
+                    return "illegal"
         
         if direccion == "RIGHT2":
-            if index < 6:
+            if index > 6:
                 return "illegal"
-            if estado_ahora=="1":
+            if right2=="2":
                     aux = self.estado_actual.get_estado()[index+2]
             else:
-                    aux = self.estado_actual.get_estado()[index]
+                    return "illegal"
+
+
         
         nuevo_estado = self.estado_actual.get_estado().replace("H","#")
         nuevo_estado = nuevo_estado.replace(aux,"H")
