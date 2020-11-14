@@ -112,11 +112,11 @@ class ocho_puzzle:
     def mover(self, direccion):
         index = self.estado_actual.get_estado().find("H")
 
-        if direccion == "UP":
-            if index < 3:
+        if direccion == "LEFT1":
+            if index < 0:
                 return "illegal"
             else:
-                aux = self.estado_actual.get_estado()[index-3]
+                aux = self.estado_actual.get_estado()[index-1]
 
         """
         123
@@ -125,11 +125,11 @@ class ocho_puzzle:
         aux = "2"
         """
         
-        if direccion == "DOWN":
-            if index > 5:
+        if direccion == "RIGHT1":
+            if index > 6:
                 return "illegal"
             else:
-                aux = self.estado_actual.get_estado()[index+3]
+                aux = self.estado_actual.get_estado()[index+1]
         
         """
         123
@@ -138,17 +138,17 @@ class ocho_puzzle:
         aux = "5"
         """
 
-        if direccion == "LEFT":
-            if index in [0,3,6]:
+        if direccion == "LEFT2":
+            if index < 0:
                 return "illegal"
             else:
-                aux = self.estado_actual.get_estado()[index-1]
+                aux = self.estado_actual.get_estado()[index-2]
         
-        if direccion == "RIGHT":
-            if index in [2,5,8]:
+        if direccion == "RIGHT2":
+            if index < 6:
                 return "illegal"
             else:
-                aux = self.estado_actual.get_estado()[index+1]
+                aux = self.estado_actual.get_estado()[index+2]
         
         nuevo_estado = self.estado_actual.get_estado().replace("H","#")
         nuevo_estado = nuevo_estado.replace(aux,"H")
@@ -158,7 +158,7 @@ class ocho_puzzle:
     def algoritmo_anchura(self, EI):
         iteracion = 0
         self.estado_actual = EI
-        movimientos = ["UP","DOWN","LEFT","RIGHT"]
+        movimientos = ["LEFT1","RIGHT1","LEFT2","RIGHT2"]
 
         while(not self.es_final()):
             print("Iteracion: " + str(iteracion) + "\n")
@@ -194,7 +194,7 @@ class ocho_puzzle:
 #MAIN
 if __name__ == "__main__":
     #puzzle = ocho_puzzle("123H56478")
-    puzzle = ocho_puzzle("8231H4765")
+    puzzle = ocho_puzzle("111H222")
     #puzzle = ocho_puzzle("3158726H4")
     #puzzle = ocho_puzzle("1832H4765")
 
