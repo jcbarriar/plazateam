@@ -70,7 +70,8 @@ class nodo_estado:
 645H321
 654H321
 
-
+Otra manera de hacerlo es 
+Estado inicial: 111H222         Estado final:222H111
 
 """
 class ocho_puzzle:
