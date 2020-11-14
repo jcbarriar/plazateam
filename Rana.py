@@ -111,44 +111,39 @@ class ocho_puzzle:
 
     def mover(self, direccion):
         index = self.estado_actual.get_estado().find("H")
-
+        estado_ahora=self.estado_actual.get_estado()
         if direccion == "LEFT1":
             if index < 0:
                 return "illegal"
+            if estado_ahora=="2":
+                    aux = self.estado_actual.get_estado()[index-1]
             else:
-                aux = self.estado_actual.get_estado()[index-1]
+                    aux = self.estado_actual.get_estado()[index]
 
-        """
-        123
-        4H6
-        758
-        aux = "2"
-        """
         
         if direccion == "RIGHT1":
             if index > 6:
                 return "illegal"
+            if estado_ahora=="1":
+                    aux = self.estado_actual.get_estado()[index+1]
             else:
-                aux = self.estado_actual.get_estado()[index+1]
-        
-        """
-        123
-        4H6
-        758
-        aux = "5"
-        """
+                    aux = self.estado_actual.get_estado()[index]
 
         if direccion == "LEFT2":
             if index < 0:
                 return "illegal"
+            if estado_ahora=="2":
+                    aux = self.estado_actual.get_estado()[index-2]
             else:
-                aux = self.estado_actual.get_estado()[index-2]
+                    aux = self.estado_actual.get_estado()[index]
         
         if direccion == "RIGHT2":
             if index < 6:
                 return "illegal"
+            if estado_ahora=="1":
+                    aux = self.estado_actual.get_estado()[index+2]
             else:
-                aux = self.estado_actual.get_estado()[index+2]
+                    aux = self.estado_actual.get_estado()[index]
         
         nuevo_estado = self.estado_actual.get_estado().replace("H","#")
         nuevo_estado = nuevo_estado.replace(aux,"H")
