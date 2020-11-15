@@ -2,8 +2,6 @@ from collections import deque
 import sys, os
 sys.setrecursionlimit(100000)
 
-
-
 class nodo_estado:
     def __init__(self, EA, EP, A, n):
         self.valor = EA
@@ -25,55 +23,11 @@ class nodo_estado:
 
     def __eq__(self, e):
         return self.valor == e
-"""
-123H456
-
-456H123
-465H123
-546H123
-564H123
-645H123
-654H123
-
-456H132
-465H132
-546H132
-564H132
-645H132
-654H132
-
-456H231
-465H231
-546H231
-564H231
-645H231
-654H231
-
-456H213
-465H213
-546H213
-564H213
-645H213
-654H213
-
-456H312
-465H312
-546H312
-564H312
-645H312
-654H312
-
-456H321
-465H321
-546H321
-564H321
-645H321
-654H321
-
-Esta inicial: 111H222   estado final: 222H111
 
 """
-class ocho_puzzle:
+Estado inicial: 111H222   estado final: 222H111
+"""
+class ranitas:
     estado_final = [nodo_estado("222H111",None,"Final",None)]
     def __init__(self, EI):
         self.estado_inicial = nodo_estado(EI, None, "Origen", 1)
@@ -115,31 +69,35 @@ class ocho_puzzle:
         left2=self.estado_actual.get_estado()[index-2]
         right1=self.estado_actual.get_estado()[index+1]
         right2=self.estado_actual.get_estado()[index+2]
+
+        #Salto 1 hacia la izquierda
         if direccion == "LEFT1":
             if index < 0:
                 return "illegal"
-            if left1=="1":
-                    aux = self.estado_actual.get_estado()[index-1]
+            if left1 == "1":
+                aux = self.estado_actual.get_estado()[index-1]
             else:
-                    return "illegal"
+                return "illegal"
 
-        
+        #Salto 1 hacia la derecha
         if direccion == "RIGHT1":
             if index > 6:
                 return "illegal"
             if right1=="2":
-                    aux = self.estado_actual.get_estado()[index+1]
+                aux = self.estado_actual.get_estado()[index+1]
             else:
-                    return "illegal"
+                return "illegal"
 
+        #Salto 2 hacia la izquierda
         if direccion == "LEFT2":
             if index < 0:
                 return "illegal"
             if left2=="1":
-                    aux = self.estado_actual.get_estado()[index-2]
+                aux = self.estado_actual.get_estado()[index-2]
             else:
-                    return "illegal"
+                return "illegal"
         
+        #Salto 2 hacia la derecha
         if direccion == "RIGHT2":
             if index > 6:
                 return "illegal"
@@ -193,9 +151,6 @@ class ocho_puzzle:
 
 #MAIN
 if __name__ == "__main__":
-    #puzzle = ocho_puzzle("123H56478")
-    puzzle = ocho_puzzle("111H222")
-    #puzzle = ocho_puzzle("3158726H4")
-    #puzzle = ocho_puzzle("1832H4765")
+    puzzle = ranitas("111H222")
 
     puzzle.busqueda()
