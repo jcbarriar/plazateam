@@ -65,10 +65,10 @@ class ranitas:
 
     def mover(self, direccion):
         index = self.estado_actual.get_estado().find("H")
-        left1=self.estado_actual.get_estado()[index-1]
-        left2=self.estado_actual.get_estado()[index-2]
-        right1=self.estado_actual.get_estado()[index+1]
-        right2=self.estado_actual.get_estado()[index+2]
+        left1 = self.estado_actual.get_estado()[index-1]
+        left2 = self.estado_actual.get_estado()[index-2]
+        right1 = self.estado_actual.get_estado()[index+1]
+        right2 = self.estado_actual.get_estado()[index+2]
 
         #Salto 1 hacia la izquierda
         if direccion == "LEFT1":
@@ -102,9 +102,9 @@ class ranitas:
             if index > 6:
                 return "illegal"
             if right2=="2":
-                    aux = self.estado_actual.get_estado()[index+2]
+                aux = self.estado_actual.get_estado()[index+2]
             else:
-                    return "illegal"
+                return "illegal"
 
 
         
