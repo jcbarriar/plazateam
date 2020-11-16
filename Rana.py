@@ -1,5 +1,6 @@
 from collections import deque
 import sys, os
+import copy
 sys.setrecursionlimit(100000)
 
 class nodo_estado:
@@ -24,15 +25,12 @@ class nodo_estado:
     def __eq__(self, e):
         return self.valor == e
 
-"""
-Estado inicial: 111H222   estado final: 222H111
-"""
 class ranitas:
-    estado_final = [nodo_estado("222H111",None,"Final",None)]
+    estado_final = [nodo_estado([2,2,2,0,1,1,1],None,"Final",None)]
     def __init__(self, EI):
         self.estado_inicial = nodo_estado(EI, None, "Origen", 1)
         self.estado_actual = None
-        self.historial = []
+        self.historial = ([])
         self.cola_estados = deque()
 
     def add(self, ET):
@@ -49,10 +47,10 @@ class ranitas:
         return self.estado_actual in self.estado_final
 
     def mostrar_estado_actual(self):
-        print("Estado Actual [" + str(self.estado_actual.get_nivel()) + "] es:\n" + self.estado_actual.get_estado())
+        print("Estado Actual:"+ str(self.estado_actual.get_estado()))
 
     def mostrar_estado(self, e):
-        print("Estado es:\n" + e.get_estado())
+        print("Estado es:\n" + str(e.get_estado()))
 
     def buscar_padre(self, e):
         if e.get_padre() == None:
@@ -64,68 +62,55 @@ class ranitas:
             self.mostrar_estado(e)
 
     def mover(self, direccion):
-        index = self.estado_actual.get_estado().find("H")
-        left1 = self.estado_actual.get_estado()[index-1]
-        left2 = self.estado_actual.get_estado()[index-2]
-        right1 = self.estado_actual.get_estado()[index+1]
-        right2 = self.estado_actual.get_estado()[index+2]
+        index = self.estado_actual.get_estado().index(0)
 
-        #Salto 1 hacia la izquierda
-        if direccion == "LEFT1":
-            if index < 0:
+        if direccion == "L1":
+            if index < 1:
                 return "illegal"
-            if left1 == "1":
-                aux = self.estado_actual.get_estado()[index-1]
             else:
+               aux = self.estado_actual.get_estado()[index-1]
+               pos = index-1
+                
+        if direccion == "R1":
+            if index > 5:
                 return "illegal"
+            else:
+                 aux = self.estado_actual.get_estado()[index+1]
+                 pos = index+1
 
-        #Salto 1 hacia la derecha
-        if direccion == "RIGHT1":
-            if index > 6:
+        if direccion == "L2":
+            if index < 2:
                 return "illegal"
-            if right1=="2":
-                aux = self.estado_actual.get_estado()[index+1]
             else:
+                 aux = self.estado_actual.get_estado()[index-2]
+                 pos = index-2
+        if direccion == "R2":
+            if index > 4:
                 return "illegal"
-
-        #Salto 2 hacia la izquierda
-        if direccion == "LEFT2":
-            if index < 0:
-                return "illegal"
-            if left2=="1":
-                aux = self.estado_actual.get_estado()[index-2]
             else:
-                return "illegal"
+                 aux = self.estado_actual.get_estado()[index+2]
+                 pos = index+2
         
-        #Salto 2 hacia la derecha
-        if direccion == "RIGHT2":
-            if index > 6:
-                return "illegal"
-            if right2=="2":
-                aux = self.estado_actual.get_estado()[index+2]
-            else:
-                return "illegal"
+        nuevo_estado = copy.copy(self.estado_actual.get_estado())
+        for i in nuevo_estado:
+            nuevo_estado[index] = aux
+            nuevo_estado[pos] = 0
 
-
-        
-        nuevo_estado = self.estado_actual.get_estado().replace("H","#")
-        nuevo_estado = nuevo_estado.replace(aux,"H")
-        nuevo_estado = nuevo_estado.replace("#", aux)
         return nuevo_estado
+
+
 
     def algoritmo_anchura(self, EI):
         iteracion = 0
         self.estado_actual = EI
-        movimientos = ["LEFT1","RIGHT1","LEFT2","RIGHT2"]
-
+        movimientos = ["L1","R1","L2","R2"]
         while(not self.es_final()):
             print("Iteracion: " + str(iteracion) + "\n")
             self.mostrar_estado_actual()
-
             for movimiento in movimientos:
-                estado_temporal = nodo_estado(self.mover(movimiento), self.estado_actual, "Mover a " + movimiento, self.estado_actual.get_nivel() + 1)
+                estado_temporal = nodo_estado(self.mover(movimiento), self.estado_actual,movimiento, self.estado_actual.get_nivel() + 1)
                 if not self.esta_en_historial(estado_temporal) and not estado_temporal.get_estado() == "illegal":
-                    self.add(estado_temporal) # se incluye en historial y en la cola
+                    self.add(estado_temporal)
 
             print("\nElementos en Historial: " + str(len(self.historial)))
             print("\nElementos en Cola Estados: " + str(len(self.cola_estados)))
@@ -145,12 +130,11 @@ class ranitas:
 
     def busqueda(self):
         self.add(self.estado_inicial)
-
         self.algoritmo_anchura(self.pop())
 
 
 #MAIN
 if __name__ == "__main__":
-    puzzle = ranitas("111H222")
 
-    puzzle.busqueda()
+    juego = ranitas([1,1,1,0,2,2,2])
+    juego.busqueda()
